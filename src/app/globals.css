@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------
+   Bokako design tokens — edit colours, radii, shadows and fonts here.
+------------------------------------------------------------------- */
+@theme {
+  --color-navy: #06182a;
+  --color-teal: #003f4b;
+  --color-lime: #b9f500;
+  --color-lime-deep: #8fc400;
+  --color-turquoise: #12bfc5;
+  --color-canvas: #f4fafd;
+  --color-mint: #eeffd8;
+  --color-sky: #d8f0ff;
+  --color-lavender: #e8d9fa;
+  --color-ink-soft: #3d5566;
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 2rem;
+  --radius-frame: 2.25rem;
+
+  --shadow-soft: 0 18px 40px -18px rgb(6 24 42 / 0.25), 0 2px 6px rgb(6 24 42 / 0.05);
+  --shadow-lift: 0 28px 50px -20px rgb(6 24 42 / 0.35), 0 4px 10px rgb(6 24 42 / 0.06);
+  --shadow-glow: 0 0 0 1px rgb(185 245 0 / 0.5), 0 14px 40px -10px rgb(185 245 0 / 0.55);
+
+  --animate-float-a: float-a 9s ease-in-out infinite;
+  --animate-float-b: float-b 11s ease-in-out infinite;
+  --animate-float-c: float-c 13s ease-in-out infinite;
+
+  @keyframes float-a {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  @keyframes float-b {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(10px) translateX(6px); }
+  }
+  @keyframes float-c {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-padding-top: 6rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #031c30 0%, #00505c 55%, #06182a 100%) fixed;
+  color: var(--color-navy);
+  font-family: var(--font-sans);
 }
+
+:focus-visible {
+  outline: 3px solid var(--color-turquoise);
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Curved, inset navigation tab: white bar hanging from the top edge with
+   concave "shoulders" that flow into the page canvas. */
+.nav-tab {
+  position: relative;
+  background: #fff;
+  border-radius: 0 0 1.75rem 1.75rem;
+  box-shadow: 0 14px 30px -18px rgb(6 24 42 / 0.28);
+}
+.nav-tab::before,
+.nav-tab::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  pointer-events: none;
+}
+.nav-tab::before {
+  right: 100%;
+  background: radial-gradient(circle at 0 100%, transparent 1.7rem, #fff 1.75rem);
+}
+.nav-tab::after {
+  left: 100%;
+  background: radial-gradient(circle at 100% 100%, transparent 1.7rem, #fff 1.75rem);
+}
+
+.hide-scrollbar { scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }

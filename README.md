@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bokako storefront
 
-## Getting Started
+Next.js (App Router) + TypeScript + Tailwind CSS v4. No backend, no database, no paid services. Checkout is external (Payhip, Gumroad or Stripe Payment Links).
 
-First, run the development server:
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Edit products
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything lives in one file: [`src/data/products.ts`](src/data/products.ts). To launch a product set `status: "available"`, a `priceEUR`, and an https `checkoutUrl`. The **Buy Now** button only appears when both status and a valid link are set; otherwise the product shows **Coming soon**. Add images to `public/products/` and reference them in `coverImage` / `screenshots`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Design tokens
 
-## Learn More
+Colours, radii, shadows and float animations are in [`src/app/globals.css`](src/app/globals.css) (`@theme`).
 
-To learn more about Next.js, take a look at the following resources:
+## Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/components/hero-art.tsx` — abstract 3D hero composition (layered SVG, floating shapes)
+- `public/icons/*-3d.svg` — the three category card icons (sun, rising bars, heart/ECG)
+- `src/components/header.tsx` — curved inset navigation tab, working search, favourites
+- `src/components/{categories,catalog,product-card}.tsx` — pills, cards, filtering
+- `src/app/products/[slug]` — product detail pages; `privacy`, `terms`, `refunds` — **draft** policy pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy to Vercel
 
-## Deploy on Vercel
+1. Push the `site` folder to a GitHub repository.
+2. In Vercel: **Add New → Project**, import the repo (framework preset: Next.js; no build settings to change).
+3. Optional env var: `NEXT_PUBLIC_SITE_URL=https://bokako.com` (see `.env.example`).
+4. Deploy, then **Settings → Domains → Add `bokako.com`** and set the DNS records Vercel shows (A record for the apex, CNAME for `www`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Before accepting payments
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Replace the temporary wordmark (`src/components/logo.tsx`) with the official logo
+- [ ] Confirm real products, copy, prices and checkout links
+- [ ] Add product cover images and screenshots
+- [ ] Complete and legally review Privacy, Terms and Refund pages (currently marked DRAFT)
+- [ ] Add a real support/contact email in the footer
+- [ ] Set up your checkout provider account, tax/VAT settings and file delivery
