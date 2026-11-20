@@ -4,6 +4,7 @@ import "./globals.css";
 import { StoreProvider } from "@/components/store-provider";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { Analytics } from "@vercel/analytics/next";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </StoreProvider>
+        <Analytics />
       </body>
     </html>
   );
